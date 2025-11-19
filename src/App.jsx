@@ -1,60 +1,41 @@
 import './App.css';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useReducer } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import New from './Pages/New';
+import Edit from './Pages/Edit';
 import Diary from './Pages/Diary';
 import NotFound from './Pages/NotFound';
-import Button from './components/Button';
 
-import { getEmotionImage } from './util/get-emotion-image';
-import Header from './components/Header.jsx';
+const mockData = [
+  {
+    id: 1,
+    createdDate: new Date().getTime(),
+    emotionId: 1,
+    content: '1번 일기 내용',
+  },
+  {
+    id: 2,
+    createdDate: new Date().getTime(),
+    emotionId: 2,
+    content: '2번 일기 내용',
+  },
+];
 
-// 1. "/": 모든 일기를 조회하는 Home 페이지
-// 2. "/new": 새로운 일기를 작성하는 New 페이지
-// 3. "/diary": 일기를 상세히 조회하는 Diary 페이지
+function reducer(state, action) {
+  return state;
+}
 
 function App() {
-  const nav = useNavigate();
-
-  const onClickButton = () => {
-    nav('/new');
-  };
+  const [data, dispatch] = useReducer(reducer, mockData);
 
   return (
     <>
-      <Header
-        title={'Header'}
-        leftChild={<Button text={'left'} />}
-        rightChild={<Button text={'right'} />}
-      />
-      <Button
-        text={'123'}
-        onClick={() => {
-          console.log('123번 버튼 클릭!');
-        }}
-        type={'DEFAULT'}
-      />
-
-      <Button
-        text={'123'}
-        onClick={() => {
-          console.log('123번 버튼 클릭!');
-        }}
-        type={'POSITIVE'}
-      />
-
-      <Button
-        text={'123'}
-        onClick={() => {
-          console.log('123번 버튼 클릭!');
-        }}
-        type={'NEGATIVE'}
-      />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
         <Route path="/diary/:id" element={<Diary />} />
+        <Route path="/edit/:id" element={<Edit />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

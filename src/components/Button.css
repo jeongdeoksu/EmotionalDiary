@@ -5,7 +5,7 @@
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 18px;
-  white-space: nowrap;
+  white-space: nowrap; /* 버튼이 줄어들더라도 텍스트가 줄바뀜되지 않도록 설정 */
 }
 
 .Button_POSITIVE {
