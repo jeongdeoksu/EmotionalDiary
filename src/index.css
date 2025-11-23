@@ -10,6 +10,7 @@ body {
   /* body의 너비를 화면(뷰포트)의 100%로 설정합니다. 기본값이기도 하지만 의도를 명확히 한 코드 */
   width: 100%;
   background-color: rgb(246, 246, 246);
+  display: flex;
 }
 
 #root {
