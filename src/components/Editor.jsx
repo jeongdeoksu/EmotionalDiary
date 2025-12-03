@@ -2,8 +2,8 @@ import React from 'react';
 import './Editor.css';
 import EmotionItem from './EmotionItem.jsx';
 import Button from './Button.jsx';
-import { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const emotionList = [
   {
@@ -39,7 +39,7 @@ const getStringedDate = (targetDate) => {
   return `${year}-${month}-${date}`;
 };
 
-const Editor = ({onSubmit}) => {
+const Editor = ({ initData, onSubmit }) => {
   const [input, setInput] = useState({
     createdDate: new Date(),
     emotionId: 3,
@@ -47,6 +47,15 @@ const Editor = ({onSubmit}) => {
   });
 
   const nav = useNavigate();
+
+  useEffect(() => {
+    if (initData) {
+      setInput({
+        ...initData,
+        createdDate: new Date(Number(initData.createdDate)),
+      });
+    }
+  }, [initData]);
 
   const onChangeInput = (e) => {
     let name = e.target.name;
@@ -56,11 +65,11 @@ const Editor = ({onSubmit}) => {
       value = new Date(value);
     }
     setInput({ ...input, [name]: value });
-  }
+  };
 
   const onClickSubmitButton = () => {
     onSubmit(input);
-  }
+  };
 
   return (
     <div className="Editor">
@@ -78,9 +87,11 @@ const Editor = ({onSubmit}) => {
         <div className="emotion_list_wrapper">
           {emotionList.map((item) => (
             <EmotionItem
-              onClick={() => onChangeInput({
-                target : { name : 'emotionId', value : item.emotionId }
-              })}
+              onClick={() =>
+                onChangeInput({
+                  target: { name: 'emotionId', value: item.emotionId },
+                })
+              }
               key={item.emotionId}
               {...item}
               isSelected={item.emotionId === input.emotionId}
@@ -99,7 +110,11 @@ const Editor = ({onSubmit}) => {
       </section>
       <section className="button_section">
         <Button onClick={() => nav(-1)} text={'취소하기'} />
-        <Button onClick={onClickSubmitButton}  text={'저장하기'} type={'POSITIVE'} />
+        <Button
+          onClick={onClickSubmitButton}
+          text={'저장하기'}
+          type={'POSITIVE'}
+        />
       </section>
     </div>
   );
